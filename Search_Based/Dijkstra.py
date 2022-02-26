@@ -2,6 +2,7 @@ import os
 import sys
 import math
 import heapq
+import time
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) +
                 "/../../Search_Based/")
@@ -50,13 +51,16 @@ class Dijkstra(AStar):
 
 
 def main():
-    s_start = (2,28)
-    s_goal = (47,3)
+    s_start = (5,5)
+    s_goal = (45,25)
+    start_time = time.time()
 
     dijkstra = Dijkstra(s_start, s_goal, 'None')
     plot = plotting.Plotting(s_start, s_goal)
 
     path, visited = dijkstra.searching()
+    end_time = time.time()
+    print("Time spent =", end_time - start_time)
     visited = list(dict.fromkeys(visited))
     print("Number of explored nodes = ", len(visited))
     print("Number of traversed nodes =", len(path))

@@ -4,6 +4,7 @@ from pydoc import doc
 import sys
 import math
 import heapq
+import time
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) +
                 "/../../Search_Based/")
@@ -212,13 +213,16 @@ class BidirectionalAStar:
 
 
 def main():
-    s_start = (2,28)
-    s_goal = (47,3)
+    s_start = (5,5)
+    s_goal = (45,25)
+    start_time = time.time()
 
     bastar = BidirectionalAStar(s_start, s_goal, "euclidean")
     plot = plotting.Plotting(s_start, s_goal)
 
     path, visited_fore, visited_back = bastar.searching()
+    end_time = time.time()
+    print("Time spent =", end_time - start_time)
     visited_fore = list(dict.fromkeys(visited_fore))
     visited_back = list(dict.fromkeys(visited_back))
     nodes_traversed = len(set(visited_back)) + len(set(visited_back))

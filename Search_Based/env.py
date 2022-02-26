@@ -59,29 +59,40 @@ class Env:
 
         for i in range(10,25):
             obs.add((40,i))
-        """
+        """        
 
         # Environment 3
 
-        for i in range(10,15):
-            for j in range(10,15):
-                obs.add((i,j))
+        for i in range(10):
+            obs.add((i+5,i))
+            obs.add((i,i+5))
+
+        for i in range(15,20):
+            obs.add((25-i,i))
+            obs.add((35-i,i))
+
+        for i in range(5,10):
+            obs.add((40-i,i))
+            obs.add((50-i,i))
+
+        for i in range(20,26):
+            obs.add((60-i,i))
+            obs.add((70-i,i))
+            obs.add((70-i-5,i+5))
+
+        for i in range(10,20):
+            obs.add((20+i,i))
+            obs.add((30+i,i))
 
         for i in range(20,25):
-            for j in range(20,25):
-                obs.add((i,j))
+            obs.add((i-15,i))
+            obs.add((i-5,i))
+            obs.add((i-15+5,i+5))
 
-        for i in range(25,30):
-            for j in range(5,10):
-                obs.add((i,j))
-        
-        for i in range(30,35):
-            for j in range(10,15):
-                obs.add((i,j))
-        
-        for i in range(40,45):
-            for j in range(20,25):
-                obs.add((i,j))
+        for i in range(10,15):
+            obs.add((i+5,i))
 
+        for i in range(20,35):
+            obs.add((i,25))        
 
         return obs
