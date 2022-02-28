@@ -215,7 +215,7 @@ def main():
     s_goal = (30,20)
     start_time = time.time()
 
-    lrta = LrtAStarN(s_start, s_goal, 500, "euclidean")
+    lrta = LrtAStarN(s_start, s_goal, 250, "euclidean")
     plot = plotting.Plotting(s_start, s_goal)
 
     lrta.searching()
@@ -229,7 +229,7 @@ def main():
         nodes_traversed += len(lrta.path[i])
     print("Number of explored nodes =", nodes_explored)
     print("Number of traversed nodes =", nodes_traversed)
-    # plot.animation_lrta(lrta.path, lrta.visited, "Learning Real-time A* (LRTA*) with N = 500")
+    plot.animation_lrta(lrta.path, lrta.visited, "Learning Real-time A* (LRTA*) with N = 500")
     print(lrta.path)
 
 if __name__ == '__main__':
