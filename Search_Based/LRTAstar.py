@@ -229,9 +229,8 @@ def main():
         nodes_traversed += len(lrta.path[i])
     print("Number of explored nodes =", nodes_explored)
     print("Number of traversed nodes =", nodes_traversed)
-    plot.animation_lrta(lrta.path, lrta.visited,
-                        "Learning Real-time A* (LRTA*) with N = 500")
-
+    # plot.animation_lrta(lrta.path, lrta.visited, "Learning Real-time A* (LRTA*) with N = 500")
+    print(lrta.path)
 
 if __name__ == '__main__':
     main()

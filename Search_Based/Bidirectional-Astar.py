@@ -214,7 +214,7 @@ class BidirectionalAStar:
 
 def main():
     s_start = (5,5)
-    s_goal = (45,25)
+    s_goal = (30,20)
     start_time = time.time()
 
     bastar = BidirectionalAStar(s_start, s_goal, "euclidean")
@@ -228,7 +228,8 @@ def main():
     nodes_traversed = len(set(visited_back)) + len(set(visited_back))
     print("Number of explored nodes = ", nodes_traversed)
     print("Number of traversed nodes =", len(path))
-    plot.animation_bi_astar(path, visited_fore, visited_back, "Bidirectional-A*")  # animation
+    print(path)
+    # plot.animation_bi_astar(path, visited_fore, visited_back, "Bidirectional-A*")  # animation
 
 
 if __name__ == '__main__':

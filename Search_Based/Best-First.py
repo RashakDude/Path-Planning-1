@@ -51,7 +51,7 @@ class BestFirst(AStar):
 
 def main():
     s_start = (5,5)
-    s_goal = (45,25)
+    s_goal = (30,20)
     start_time = time.time()
 
     BF = BestFirst(s_start, s_goal, 'euclidean')
@@ -63,6 +63,7 @@ def main():
     visited = list(dict.fromkeys(visited))
     print("Number of explored nodes = ", len(visited))
     print("Number of traversed nodes =", len(path))
+    print(path)
     plot.animation(path, visited, "Best-first Searching")  # animation
 
 

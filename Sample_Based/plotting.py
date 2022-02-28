@@ -45,7 +45,7 @@ class Plotting:
                 patches.Rectangle(
                     (ox, oy), w, h,
                     edgecolor='black',
-                    facecolor='gray',
+                    facecolor='black',
                     fill=True
                 )
             )
@@ -55,7 +55,7 @@ class Plotting:
                 patches.Circle(
                     (ox, oy), r,
                     edgecolor='black',
-                    facecolor='gray',
+                    facecolor='black',
                     fill=True
                 )
             )

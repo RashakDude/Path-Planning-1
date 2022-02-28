@@ -2,6 +2,7 @@ import os
 import sys
 import math
 import matplotlib.pyplot as plt
+import time
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) +
                 "/../../Search_based_Planning/")

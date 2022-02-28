@@ -205,7 +205,7 @@ class AStar:
 
 def main():
     s_start = (5,5)
-    s_goal = (45,25)
+    s_goal = (30,20)
     start_time = time.time()
 
     astar = AStar(s_start, s_goal, "euclidean")
@@ -217,7 +217,8 @@ def main():
     visited = list(dict.fromkeys(visited))
     print("Number of explored nodes = ", len(visited))
     print("Number of traversed nodes =", len(path))
-    plot.animation(path, visited, "A*")  # animation
+    print(path)
+    # plot.animation(path, visited, "A*")  # animation
 
     # path, visited = astar.searching_repeated_astar(2.5)               # initial weight e = 2.5
     # plot.animation_ara_star(path, visited, "Repeated A*")

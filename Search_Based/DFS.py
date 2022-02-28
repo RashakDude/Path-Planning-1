@@ -51,7 +51,7 @@ class DFS(AStar):
 
 def main():
     s_start = (5,5)
-    s_goal = (45,25)
+    s_goal = (30,20)
     start_time = time.time()
 
     dfs = DFS(s_start, s_goal, 'None')
@@ -64,7 +64,8 @@ def main():
     visited = list(dict.fromkeys(visited))
     print("Number of explored nodes = ", len(visited))
     print("Number of traversed nodes =", len(path))
-    plot.animation(path, visited, "Depth-first Searching (DFS)")  # animation
+    print(path)
+    # plot.animation(path, visited, "Depth-first Searching (DFS)")  # animation
 
 
 if __name__ == '__main__':
