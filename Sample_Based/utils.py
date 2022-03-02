@@ -28,7 +28,7 @@ class Utils:
         delta = self.delta
         obs_list = []
 
-        for (ox, oy, w, h) in self.obs_rectangle:
+        for (ox, oy, w, h, a) in self.obs_rectangle:
             vertex_list = [[ox - delta, oy - delta],
                            [ox + w + delta, oy - delta],
                            [ox + w + delta, oy + h + delta],
@@ -105,7 +105,7 @@ class Utils:
             if math.hypot(node.x - x, node.y - y) <= r + delta:
                 return True
 
-        for (x, y, w, h) in self.obs_rectangle:
+        for (x, y, w, h, a) in self.obs_rectangle:
             if 0 <= node.x - (x - delta) <= w + 2 * delta \
                     and 0 <= node.y - (y - delta) <= h + 2 * delta:
                 return True

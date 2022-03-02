@@ -2,6 +2,7 @@ import os
 import sys
 import math
 import numpy as np
+import time
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) +
                 "/../../Sample_Based/")
@@ -93,12 +94,17 @@ class Rrt:
 
 
 def main():
-    x_start = (2, 2)  # Starting node
-    x_goal = (49, 24)  # Goal node
+    x_start = (5, 5)  # Starting node
+    x_goal = (30, 20)  # Goal node
+    start_time = time.time()
 
-    rrt = Rrt(x_start, x_goal, 0.5, 0.05, 10000)
+    rrt = Rrt(x_start, x_goal, 0.5, 0.05, 5000)
     path = rrt.planning()
+    end_time = time.time()
+    print(end_time - start_time)
     print(len(path))
+    print(len(rrt.vertex))
+    print(path)
 
     if path:
         rrt.plotting.animation(rrt.vertex, path, "RRT", True)

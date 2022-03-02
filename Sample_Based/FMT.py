@@ -5,6 +5,7 @@ import random
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
+import time
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) +
                 "/../../Sample_Based/")
@@ -181,7 +182,7 @@ class FMT:
                 patches.Rectangle(
                     (ox, oy), w, h,
                     edgecolor='black',
-                    facecolor='gray',
+                    facecolor='black',
                     fill=True
                 )
             )
@@ -191,7 +192,7 @@ class FMT:
                 patches.Circle(
                     (ox, oy), r,
                     edgecolor='black',
-                    facecolor='gray',
+                    facecolor='black',
                     fill=True
                 )
             )
@@ -204,8 +205,8 @@ class FMT:
 
 
 def main():
-    x_start = (18, 8)  # Starting node
-    x_goal = (37, 18)  # Goal node
+    x_start = (5, 5)  # Starting node
+    x_goal = (30, 20)  # Goal node
 
     fmt = FMT(x_start, x_goal, 40)
     fmt.Planning()

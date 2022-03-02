@@ -6,6 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from scipy.spatial.transform import Rotation as Rot
+import time
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) +
                 "/../../Sample_Based/")
@@ -343,7 +344,7 @@ class BITStar:
                 patches.Rectangle(
                     (ox, oy), w, h,
                     edgecolor='black',
-                    facecolor='gray',
+                    facecolor='black',
                     fill=True
                 )
             )
@@ -353,7 +354,7 @@ class BITStar:
                 patches.Circle(
                     (ox, oy), r,
                     edgecolor='black',
-                    facecolor='gray',
+                    facecolor='black',
                     fill=True
                 )
             )
@@ -383,10 +384,10 @@ class BITStar:
 
 
 def main():
-    x_start = (18, 8)  # Starting node
-    x_goal = (37, 18)  # Goal node
+    x_start = (5, 5)  # Starting node
+    x_goal = (30, 20)  # Goal node
     eta = 2
-    iter_max = 200
+    iter_max = 5000
     print("start!!!")
     bit = BITStar(x_start, x_goal, eta, iter_max)
     # bit.animation("Batch Informed Trees (BIT*)")

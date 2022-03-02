@@ -7,6 +7,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)) +
                 "/../../Sample_Based/")
 
 import env, plotting, utils, queue
+import time
 
 
 class Node:
@@ -58,7 +59,8 @@ class RrtStar:
         index = self.search_goal_parent()
         self.path = self.extract_path(self.vertex[index])
 
-        self.plotting.animation(self.vertex, self.path, "rrt*, N = " + str(self.iter_max))
+        self.plotting.animation(self.vertex, self.path, "RRT*")
+        return self.path
 
     def new_state(self, node_start, node_goal):
         dist, theta = self.get_distance_and_angle(node_start, node_goal)
@@ -168,12 +170,17 @@ class RrtStar:
 
 
 def main():
-    x_start = (18, 8)  # Starting node
-    x_goal = (37, 18)  # Goal node
+    x_start = (5, 5)  # Starting node
+    x_goal = (30, 20)  # Goal node
+    start_time = time.time()
 
-    rrt_star = RrtStar(x_start, x_goal, 10, 0.10, 20, 10000)
-    rrt_star.planning()
-
+    rrt_star = RrtStar(x_start, x_goal, 10, 0.10, 20, 5000)
+    path = rrt_star.planning()
+    end_time = time.time()
+    print(end_time - start_time)
+    print(len(rrt_star.vertex))
+    print(len(path))
+    print(path)
 
 if __name__ == '__main__':
     main()

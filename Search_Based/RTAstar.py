@@ -1,4 +1,6 @@
 import os
+from platform import node
+from re import L
 import sys
 import copy
 import math
@@ -10,7 +12,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)) +
 import queue, plotting, env
 
 
-class LrtAStarN:
+class RTAAStar:
     def __init__(self, s_start, s_goal, N, heuristic_type):
         self.s_start, self.s_goal = s_start, s_goal
         self.heuristic_type = heuristic_type
@@ -40,39 +42,32 @@ class LrtAStarN:
         s_start = self.s_start  # initialize start node
 
         while True:
-            OPEN, CLOSED = self.AStar(s_start, self.N)  # OPEN, CLOSED sets in each iteration
+            OPEN, CLOSED, g_table, PARENT = \
+                self.Astar(s_start, self.N)
 
             if OPEN == "FOUND":  # reach the goal node
                 self.path.append(CLOSED)
                 break
 
-            h_value = self.iteration(CLOSED)  # h_value table of CLOSED nodes
+            s_next, h_value = self.cal_h_value(OPEN, CLOSED, g_table, PARENT)
 
             for x in h_value:
                 self.h_table[x] = h_value[x]
 
-            s_start, path_k = self.extract_path_in_CLOSE(s_start, h_value)  # x_init -> expected node in OPEN set
+            s_start, path_k = self.extract_path_in_CLOSE(s_start, s_next, h_value)
             self.path.append(path_k)
 
-    def extract_path_in_CLOSE(self, s_start, h_value):
-        path = [s_start]
-        s = s_start
+    def cal_h_value(self, OPEN, CLOSED, g_table, PARENT):
+        v_open = {}
+        h_value = {}
+        for (_, x) in OPEN.enumerate():
+            v_open[x] = g_table[PARENT[x]] + 1 + self.h_table[x]
+        s_open = min(v_open, key=v_open.get)
+        f_min = v_open[s_open]
+        for x in CLOSED:
+            h_value[x] = f_min - g_table[x]
 
-        while True:
-            h_list = {}
-
-            for s_n in self.get_neighbor(s):
-                if s_n in h_value:
-                    h_list[s_n] = h_value[s_n]
-                else:
-                    h_list[s_n] = self.h_table[s_n]
-
-            s_key = min(h_list, key=h_list.get)  # move to the smallest node with min h_value
-            path.append(s_key)  # generate path
-            s = s_key  # use end of this iteration as the start of next
-
-            if s_key not in h_value:  # reach the expected node in OPEN set
-                return s_key, path
+        return s_open, h_value
 
     def iteration(self, CLOSED):
         h_value = {}
@@ -94,9 +89,9 @@ class LrtAStarN:
             if h_value == h_value_rec:  # h_value table converged
                 return h_value
 
-    def AStar(self, x_start, N):
+    def Astar(self, x_start, N):
         OPEN = queue.QueuePrior()  # OPEN set
-        OPEN.put(x_start, self.h(x_start))
+        OPEN.put(x_start, self.h_table[x_start])
         CLOSED = []  # CLOSED set
         g_table = {x_start: 0, self.s_goal: float("inf")}  # Cost to come
         PARENT = {x_start: x_start}  # relations
@@ -109,7 +104,7 @@ class LrtAStarN:
 
             if s == self.s_goal:  # reach the goal node
                 self.visited.append(CLOSED)
-                return "FOUND", self.extract_path(x_start, PARENT)
+                return "FOUND", self.extract_path(x_start, PARENT), [], []
 
             for s_n in self.get_neighbor(s):
                 if s_n not in CLOSED:
@@ -126,7 +121,7 @@ class LrtAStarN:
 
         self.visited.append(CLOSED)  # visited nodes in each iteration
 
-        return OPEN, CLOSED
+        return OPEN, CLOSED, g_table, PARENT
 
     def get_neighbor(self, s):
         """
@@ -135,33 +130,47 @@ class LrtAStarN:
         :return: neighbors
         """
 
-        s_list = []
+        s_list = set()
 
         for u in self.u_set:
             s_next = tuple([s[i] + u[i] for i in range(2)])
             if s_next not in self.obs:
-                s_list.append(s_next)
+                s_list.add(s_next)
 
         return s_list
+
+    def extract_path_in_CLOSE(self, s_end, s_start, h_value):
+        path = [s_start]
+        s = s_start
+
+        while True:
+            h_list = {}
+            for s_n in self.get_neighbor(s):
+                if s_n in h_value:
+                    h_list[s_n] = h_value[s_n]
+            s_key = max(h_list, key=h_list.get)  # move to the smallest node with min h_value
+            path.append(s_key)  # generate path
+            s = s_key  # use end of this iteration as the start of next
+
+            if s_key == s_end:  # reach the expected node in OPEN set
+                return s_start, list(reversed(path))
 
     def extract_path(self, x_start, parent):
         """
         Extract the path based on the relationship of nodes.
-
         :return: The planning path
         """
 
-        path_back = [self.s_goal]
-        x_current = self.s_goal
+        path = [self.s_goal]
+        s = self.s_goal
 
         while True:
-            x_current = parent[x_current]
-            path_back.append(x_current)
-
-            if x_current == x_start:
+            s = parent[s]
+            path.append(s)
+            if s == x_start:
                 break
 
-        return list(reversed(path_back))
+        return list(reversed(path))
 
     def h(self, s):
         """
@@ -211,28 +220,33 @@ class LrtAStarN:
 
 
 def main():
-    s_start = (5,5)
-    s_goal = (30,20)
+    s_start = (5, 5)
+    s_goal = (30, 20)
+
     start_time = time.time()
 
-    lrta = LrtAStarN(s_start, s_goal, 250, "euclidean")
+    rtaa = RTAAStar(s_start, s_goal, 250, "euclidean")
     plot = plotting.Plotting(s_start, s_goal)
 
-    lrta.searching()
+    rtaa.searching()
+
     end_time = time.time()
     print("Time spent =", end_time - start_time)
-    iterations = len(lrta.path)
+
+    iterations = len(rtaa.path)
     nodes_explored = 0
     nodes_traversed = set()
     for i in range(iterations):
-        nodes_explored += len(lrta.visited[i])
-        for j in range(len(lrta.path[i])):
-            nodes_traversed.add(lrta.path[i][j])
+        nodes_explored += len(rtaa.visited[i])
+        for j in range(len(rtaa.path[i])):
+            nodes_traversed.add(rtaa.path[i][j])
+    
+    print("Number of nodes explored =", nodes_explored)
+    print("Number of nodes traversed =", len(nodes_traversed))
+    print(rtaa.path)
+    plot.animation_lrta(rtaa.path, rtaa.visited,
+                        "Real-time Adaptive A* (RTAA*)")
 
-    print("Number of explored nodes =", nodes_explored)
-    print("Number of traversed nodes =", len(nodes_traversed))
-    plot.animation_lrta(lrta.path, lrta.visited, "Learning Real-time A* (LRTA*)")
-    print(lrta.path)
 
 if __name__ == '__main__':
     main()

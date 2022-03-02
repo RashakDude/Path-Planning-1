@@ -59,7 +59,7 @@ class Env:
 
         for i in range(10,25):
             obs.add((40,i))
-        """    
+        """   
 
         # Environment 3
 

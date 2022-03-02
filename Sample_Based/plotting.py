@@ -40,10 +40,11 @@ class Plotting:
                 )
             )
 
-        for (ox, oy, w, h) in self.obs_rectangle:
+        for (ox, oy, w, h, a) in self.obs_rectangle:
             ax.add_patch(
                 patches.Rectangle(
                     (ox, oy), w, h,
+                    angle = a,
                     edgecolor='black',
                     facecolor='black',
                     fill=True
