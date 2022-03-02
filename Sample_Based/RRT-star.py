@@ -59,7 +59,7 @@ class RrtStar:
         index = self.search_goal_parent()
         self.path = self.extract_path(self.vertex[index])
 
-        self.plotting.animation(self.vertex, self.path, "RRT*")
+        # self.plotting.animation(self.vertex, self.path, "RRT*")
         return self.path
 
     def new_state(self, node_start, node_goal):
@@ -171,16 +171,17 @@ class RrtStar:
 
 def main():
     x_start = (5, 5)  # Starting node
-    x_goal = (30, 20)  # Goal node
+    x_goal = (45, 25)  # Goal node
     start_time = time.time()
 
     rrt_star = RrtStar(x_start, x_goal, 10, 0.10, 20, 5000)
     path = rrt_star.planning()
     end_time = time.time()
-    print(end_time - start_time)
+    print("Time =", end_time - start_time)
     print(len(rrt_star.vertex))
     print(len(path))
     print(path)
+    rrt_star.plotting.animation(rrt_star.vertex, path, "RRT*")
 
 if __name__ == '__main__':
     main()

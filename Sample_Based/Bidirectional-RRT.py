@@ -140,12 +140,19 @@ class RrtConnect:
 
 def main():
     x_start = (5, 5)  # Starting node
-    x_goal = (30, 20)  # Goal node
+    x_goal = (45, 25)  # Goal node
+    start_time = time.time()
 
     rrt_conn = RrtConnect(x_start, x_goal, 0.8, 0.05, 5000)
     path = rrt_conn.planning()
-
+    end_time = time.time()
+    print("Time =", end_time - start_time)
+    nodes_explored = len(rrt_conn.V1) + len(rrt_conn.V2)
+    nodes_travelled = len(path)
+    print(nodes_explored)
+    print(nodes_travelled)
     rrt_conn.plotting.animation_connect(rrt_conn.V1, rrt_conn.V2, path, "BIDIRECTIONAL_RRT")
+    print(path)
 
 
 if __name__ == '__main__':

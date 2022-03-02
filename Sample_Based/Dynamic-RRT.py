@@ -51,7 +51,7 @@ class DynamicRrt:
         self.obs_circle = self.env.obs_circle
         self.obs_rectangle = self.env.obs_rectangle
         self.obs_boundary = self.env.obs_boundary
-        self.obs_add = [0, 0, 0]
+        self.obs_add = [0, 0, 0, 0, 0]
 
         self.path = []
         self.waypoint = []
@@ -90,8 +90,8 @@ class DynamicRrt:
         else:
             x, y = int(x), int(y)
             print("Add circle obstacle at: s =", x, ",", "y =", y)
-            self.obs_add = [x, y, 2]
-            self.obs_circle.append([x, y, 2])
+            self.obs_add = [x-1, y-1, 3, 3, 0]
+            self.obs_rectangle.append([x-1, y-1, 3, 3, 0])
             self.utils.update_obs(self.obs_circle, self.obs_boundary, self.obs_rectangle)
             self.InvalidateNodes()
 
@@ -259,7 +259,7 @@ class DynamicRrt:
                 )
             )
 
-        for (ox, oy, w, h) in self.obs_rectangle:
+        for (ox, oy, w, h, a) in self.obs_rectangle:
             self.ax.add_patch(
                 patches.Rectangle(
                     (ox, oy), w, h,
@@ -329,9 +329,12 @@ class DynamicRrt:
 def main():
     x_start = (5, 5)  # Starting node
     x_goal = (30, 20)  # Goal node
+    start_time = time.time()
 
-    drrt = DynamicRrt(x_start, x_goal, 0.5, 0.1, 0.6, 5000)
+    drrt = DynamicRrt(x_start, x_goal, 0.5, 0.1, 0.6, 10000)
     drrt.planning()
+    end_time = time.time()
+    print("Time =", end_time - start_time)
 
 
 if __name__ == '__main__':

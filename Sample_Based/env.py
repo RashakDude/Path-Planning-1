@@ -29,16 +29,14 @@ class Env:
         ]
 
         # Environment 2
-
+        
         obs_rectangle = [
             [10, 10, 30, 1, 0],
             [10, 10, 1, 15, 0],
             [10, 25, 25, 1, 0],
             [40, 10, 1, 15, 0]
         ]
-
-
-
+        
         return obs_rectangle
 
     @staticmethod

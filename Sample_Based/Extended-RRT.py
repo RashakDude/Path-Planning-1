@@ -44,6 +44,7 @@ class ExtendedRrt:
         self.waypoint = []
 
     def planning(self):
+        start_time = time.time()
         for i in range(self.iter_max):
             node_rand = self.generate_random_node(self.goal_sample_rate)
             node_near = self.nearest_neighbor(self.vertex, node_rand)
@@ -57,6 +58,8 @@ class ExtendedRrt:
                     self.new_state(node_new, self.s_goal)
 
                     path = self.extract_path(node_new)
+                    end_time = time.time()
+                    print("Time =", end_time - start_time)
                     self.plot_grid("Extended_RRT")
                     self.plot_visited()
                     self.plot_path(path)
@@ -185,7 +188,7 @@ class ExtendedRrt:
                 )
             )
 
-        for (ox, oy, w, h) in self.obs_rectangle:
+        for (ox, oy, w, h, a) in self.obs_rectangle:
             self.ax.add_patch(
                 patches.Rectangle(
                     (ox, oy), w, h,
@@ -238,10 +241,8 @@ class ExtendedRrt:
 def main():
     x_start = (5, 5)  # Starting node
     x_goal = (30, 20)  # Goal node
-
     errt = ExtendedRrt(x_start, x_goal, 0.5, 0.1, 0.6, 5000)
     errt.planning()
-
 
 if __name__ == '__main__':
     main()

@@ -95,13 +95,13 @@ class Rrt:
 
 def main():
     x_start = (5, 5)  # Starting node
-    x_goal = (30, 20)  # Goal node
+    x_goal = (45, 25)  # Goal node
     start_time = time.time()
 
     rrt = Rrt(x_start, x_goal, 0.5, 0.05, 5000)
     path = rrt.planning()
     end_time = time.time()
-    print(end_time - start_time)
+    print("Time =", end_time - start_time)
     print(len(path))
     print(len(rrt.vertex))
     print(path)

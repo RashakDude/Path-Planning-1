@@ -60,13 +60,21 @@ class DStar:
 
     def on_press(self, event):
         x, y = event.xdata, event.ydata
-        if x < 0 or x > self.x - 1 or y < 0 or y > self.y - 1:
+        if x < 1 or x > self.x - 1 or y < 1 or y > self.y - 1:
             print("Please choose right area!")
         else:
             x, y = int(x), int(y)
             if (x, y) not in self.obs:
                 print("Add obstacle at: s =", x, ",", "y =", y)
                 self.obs.add((x, y))
+                self.obs.add((x-1, y-1))
+                self.obs.add((x, y-1))
+                self.obs.add((x+1, y-1))
+                self.obs.add((x-1, y))
+                self.obs.add((x+1, y))
+                self.obs.add((x-1, y+1))
+                self.obs.add((x, y+1))
+                self.obs.add((x+1, y+1))
                 self.Plot.update_obs(self.obs)
 
                 s = self.s_start
@@ -290,8 +298,8 @@ class DStar:
 
 
 def main():
-    s_start = (2,28)
-    s_goal = (47,3)
+    s_start = (5,5)
+    s_goal = (30, 20)
     dstar = DStar(s_start, s_goal)
     dstar.run(s_start, s_goal)
     plot = plotting.Plotting(s_start, s_goal)

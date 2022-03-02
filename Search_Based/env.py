@@ -47,7 +47,7 @@ class Env:
 
         # Environment 2
 
-        """
+        
         for i in range(10,25):
             obs.add((10,i))
 
@@ -59,11 +59,11 @@ class Env:
 
         for i in range(10,25):
             obs.add((40,i))
-        """   
+           
 
         # Environment 3
 
-        
+        """
         for i in range(10):
             obs.add((i+5,i))
             obs.add((i,i+5))
@@ -95,6 +95,6 @@ class Env:
 
         for i in range(20,35):
             obs.add((i,25))  
-              
+        """    
 
         return obs

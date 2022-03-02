@@ -56,6 +56,7 @@ class FMT:
         self.V_open.add(self.x_init)
 
     def Planning(self):
+        start_time = time.time()
         self.Init()
         z = self.x_init
         n = self.sample_numbers
@@ -91,7 +92,16 @@ class FMT:
 
         # node_end = self.ChooseGoalPoint()
         path_x, path_y = self.ExtractPath()
+        end_time = time.time()
+        print("Time =", end_time - start_time)
         self.animation(path_x, path_y, Visited[1: len(Visited)])
+        print("Nodes explored =", len(Visited))
+        print("Nodes traversed =", len(path_x))
+        path = []
+        for i in range(len(path_x)):
+            path.append((path_x[i],path_y[i]))
+        print(path)
+
 
     def ChooseGoalPoint(self):
         Near = self.Near(self.V, self.x_goal, 2.0)
@@ -177,7 +187,7 @@ class FMT:
                 )
             )
 
-        for (ox, oy, w, h) in self.obs_rectangle:
+        for (ox, oy, w, h, a) in self.obs_rectangle:
             self.ax.add_patch(
                 patches.Rectangle(
                     (ox, oy), w, h,
@@ -206,11 +216,9 @@ class FMT:
 
 def main():
     x_start = (5, 5)  # Starting node
-    x_goal = (30, 20)  # Goal node
-
+    x_goal = (45, 25)  # Goal node
     fmt = FMT(x_start, x_goal, 40)
     fmt.Planning()
-
 
 if __name__ == '__main__':
     main()
