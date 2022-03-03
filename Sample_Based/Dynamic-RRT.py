@@ -328,7 +328,7 @@ class DynamicRrt:
 
 def main():
     x_start = (5, 5)  # Starting node
-    x_goal = (30, 20)  # Goal node
+    x_goal = (45, 25)  # Goal node
     start_time = time.time()
 
     drrt = DynamicRrt(x_start, x_goal, 0.5, 0.1, 0.6, 10000)
